@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using adventureApi.Middleware;
+using adventureApi.Models.Entities;
 using adventureApi.Models.Settings;
 using adventureApi.Services;
 using adventureApi.Services.Interfaces;
@@ -30,10 +31,12 @@ namespace adventureApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddDbContext<AdventureContext>();
+
             services.AddCors();
             services.AddControllers();
 
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
         }

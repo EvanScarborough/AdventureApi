@@ -1,22 +1,28 @@
 ﻿using System;
+using System.Linq;
 using adventureApi.Models.Entities;
 using adventureApi.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace adventureApi.Services
 {
     public class UserService : IUserService
     {
+        private AdventureContext _db;
+
+        public UserService(AdventureContext db)
+        {
+            _db = db;
+        }
         
         public User GetById(int id)
         {
-            if (id == 1) return new User() { UserId = 1, DisplayName = "Evan", Email = "evan@ekc.com", Password = "Password1!", Role = Helpers.Constants.UserRole.Admin };
-            return null;
+            return _db.Users.Where(u => u.UserId == id).FirstOrDefault();
         }
 
         public User GetByEmail(string email)
         {
-            if (email == "evan@ekc.com") return new User() { UserId = 1, DisplayName = "Evan", Email = "evan@ekc.com", Password = "Password1!", Role = Helpers.Constants.UserRole.Admin };
-            return null;
+            return _db.Users.Where(u => u.Email == email).FirstOrDefault();
         }
     }
 }
