@@ -16,18 +16,20 @@ namespace adventureApi.Services
     {
         private AppSettings _appSettings;
         private IUserService _userService;
+        private IEncryptionService _encryptionService;
 
-        public AuthService(IOptions<AppSettings> appSettings, IUserService userService)
+        public AuthService(IOptions<AppSettings> appSettings, IUserService userService, IEncryptionService encryptionService)
         {
             _appSettings = appSettings.Value;
             _userService = userService;
+            _encryptionService = encryptionService;
         }
 
         public LoginResponseModel Login(LoginRequestModel request)
         {
             User user = _userService.GetByEmail(request.Email);
 
-            if (user == null || request.Password != user.Password) return null;
+            if (user == null || request.Password != _encryptionService.Decrypt(user.Password)) return null;
 
             return new LoginResponseModel()
             {
