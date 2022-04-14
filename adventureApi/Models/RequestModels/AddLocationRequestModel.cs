@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using adventureApi.Helpers;
 
-namespace adventureApi.Models.Entities
+namespace adventureApi.Models.RequestModels
 {
-    public class Location
-	{
-		public int LocationId { get; set; }
+    public class AddLocationRequestModel
+    {
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public Constants.LocationType LocationTypeId { get; set; }
+		public Constants.LocationType LocationType { get; set; }
 		public string AddressLine1 { get; set; }
 		public string AddressLine2 { get; set; }
 		public string City { get; set; }
@@ -20,12 +17,6 @@ namespace adventureApi.Models.Entities
 		public string Neighborhood { get; set; }
 		public decimal Latitude { get; set; }
 		public decimal Longitude { get; set; }
-		public int AddedByUserId { get; set; }
-		[ForeignKey(nameof(AddedByUserId))]
-		public User AddedByUser { get; set; }
-		public DateTime AddedAtTime { get; set; }
 		public bool IsPrivate { get; set; }
-		public bool IsDeleted { get; set; }
-		public List<Adventure> Adventures { get; set; }
 	}
 }

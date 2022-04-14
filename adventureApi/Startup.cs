@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using adventureApi.Middleware;
 using adventureApi.Models.Entities;
@@ -35,11 +36,18 @@ namespace adventureApi
             services.AddDbContext<AdventureContext>();
 
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(opts =>
+                {
+                    var enumConverter = new JsonStringEnumConverter();
+                    opts.JsonSerializerOptions.Converters.Add(enumConverter);
+                });
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEncryptionService, EncryptionService>();
+            services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<IAdventureService, AdventureService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
