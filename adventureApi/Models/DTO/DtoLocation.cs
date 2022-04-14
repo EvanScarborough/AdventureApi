@@ -59,8 +59,8 @@ namespace adventureApi.Models.DTO
                 .Where(a => !a.IsDeleted)
                 .Select(a => a.AdventureMembers
                     .Select(m => (decimal)m.Rating)
-                    .Average())
-                .Average() ?? 0;
+                    .AverageOrDefault())
+                .AverageOrDefault() ?? 0;
         }
         public DtoLocation(Location l, int userId) : this(l)
         {
@@ -73,8 +73,8 @@ namespace adventureApi.Models.DTO
                     && a.AdventureMembers.Any(m => m.UserId == userId))
                 .Select(a => a.AdventureMembers
                     .Select(m => (decimal)m.Rating)
-                    .Average())
-                .Average() ?? 0;
+                    .AverageOrDefault())
+                .AverageOrDefault() ?? 0;
         }
     }
 }

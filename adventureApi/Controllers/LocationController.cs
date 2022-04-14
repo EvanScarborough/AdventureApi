@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using adventureApi.Helpers;
+using adventureApi.Models.DTO;
 using adventureApi.Models.Entities;
 using adventureApi.Models.RequestModels;
 using adventureApi.Services.Interfaces;
@@ -24,7 +26,9 @@ namespace adventureApi.Controllers
         public IActionResult GetAll()
         {
             var user = (User)HttpContext.Items["User"];
-            return Ok(_locationService.GetAll(user.UserId));
+            return Ok(_locationService.GetAll()
+                .Where(l => _locationService.UserHasAccess(l, user.UserId))
+                .Select(l => new DtoLocation(l, user.UserId)));
         }
 
         [HttpPost]
@@ -32,8 +36,9 @@ namespace adventureApi.Controllers
         public IActionResult AddLocation(AddLocationRequestModel request)
         {
             var user = (User)HttpContext.Items["User"];
-            var location = _locationService.Add(request, user.UserId);
-            return Ok(location);
+            var locationId = _locationService.Add(request, user.UserId);
+            var location = _locationService.Get(locationId);
+            return Ok(new DtoLocation(location));
         }
     }
 }

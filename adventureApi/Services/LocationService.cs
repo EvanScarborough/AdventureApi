@@ -5,6 +5,7 @@ using adventureApi.Models.DTO;
 using adventureApi.Models.Entities;
 using adventureApi.Models.RequestModels;
 using adventureApi.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace adventureApi.Services
 {
@@ -17,7 +18,7 @@ namespace adventureApi.Services
             _db = db;
         }
 
-        public DtoLocation Add(AddLocationRequestModel request, int userId)
+        public int Add(AddLocationRequestModel request, int userId)
         {
             var location = new Location()
             {
@@ -39,21 +40,35 @@ namespace adventureApi.Services
             };
             _db.Locations.Add(location);
             _db.SaveChanges();
-            return new DtoLocation(location);
+            return location.LocationId;
         }
 
-        public List<DtoLocation> GetAll(int userId)
+        public Location Get(int locationId)
+        {
+            return _db.Locations
+                .Where(l => l.LocationId == locationId)
+                .Include(l => l.Adventures)
+                .ThenInclude(a => a.AdventureMembers)
+                .ThenInclude(m => m.User)
+                .SingleOrDefault();
+        }
+
+        public List<Location> GetAll()
         {
             return _db.Locations
                 .Where(l => !l.IsDeleted)
-                .Where(l => !l.IsPrivate
-                    || l.AddedByUserId == userId
-                    || l.Adventures.Any(a => !a.IsDeleted
-                        && a.AdventureMembers.Any(m => m.UserId == userId)
-                    )
-                )
-                .Select(l => new DtoLocation(l, userId))
+                .Include(l => l.Adventures)
+                .ThenInclude(a => a.AdventureMembers)
+                .ThenInclude(m => m.User)
                 .ToList();
+        }
+
+        public bool UserHasAccess(Location location, int userId)
+        {
+            if (!location.IsPrivate) return true;
+            if (location.AddedByUserId == userId) return true;
+            if (location.Adventures.Any(a => a.AdventureMembers.Any(m => m.UserId == userId))) return true;
+            return false;
         }
     }
 }
