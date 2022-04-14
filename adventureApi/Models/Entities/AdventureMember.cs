@@ -11,5 +11,6 @@ namespace adventureApi.Models.Entities
         public bool IsPrimary { get; set; }
         public int Rating { get; set; }
         public string Comment { get; set; }
+        public bool IsPrivate { get; set; }
     }
 }
