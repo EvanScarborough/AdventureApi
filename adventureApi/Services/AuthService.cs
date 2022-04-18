@@ -36,6 +36,7 @@ namespace adventureApi.Services
                 UserId = user.UserId,
                 Email = user.Email,
                 DisplayName = user.DisplayName,
+                Role = user.Role,
                 Token = GenerateToken(user)
             };
         }

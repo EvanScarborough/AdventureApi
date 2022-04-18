@@ -11,7 +11,7 @@ namespace adventureApi.Models.DTO
         public int LocationId { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public Constants.LocationType LocationTypeId { get; set; }
+		public Constants.LocationType LocationType { get; set; }
 		public string AddressLine1 { get; set; }
 		public string AddressLine2 { get; set; }
 		public string City { get; set; }
@@ -34,7 +34,7 @@ namespace adventureApi.Models.DTO
         {
             LocationId = l.LocationId;
             Name = l.Name;
-            LocationTypeId = l.LocationTypeId;
+            LocationType = l.LocationTypeId;
             Description = l.Description;
             AddedByUser = new DtoUser()
             {
