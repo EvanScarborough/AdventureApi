@@ -31,6 +31,17 @@ namespace adventureApi.Controllers
                 .Select(l => new DtoLocation(l, user.UserId)));
         }
 
+        [HttpGet("{locationId}")]
+        [Authorize(Constants.UserRole.Basic)]
+        public IActionResult GetByLocationId(int locationId)
+        {
+            var user = (User)HttpContext.Items["User"];
+            var location = _locationService.Get(locationId);
+            if (location == null) return NotFound();
+            if (!_locationService.UserHasAccess(location, user.UserId)) return Forbid();
+            return Ok(new DtoLocation(location, user.UserId));
+        }
+
         [HttpPost]
         [Authorize(Constants.UserRole.Contributor)]
         public IActionResult AddLocation(AddLocationRequestModel request)

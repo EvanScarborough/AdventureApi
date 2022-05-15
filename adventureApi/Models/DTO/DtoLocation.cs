@@ -36,11 +36,7 @@ namespace adventureApi.Models.DTO
             Name = l.Name;
             LocationType = l.LocationTypeId;
             Description = l.Description;
-            AddedByUser = new DtoUser()
-            {
-                UserId = l.AddedByUser.UserId,
-                DisplayName = l.AddedByUser.DisplayName
-            };
+            AddedByUser = new DtoUser(l.AddedByUser);
             AddedAtTime = l.AddedAtTime;
             AddressLine1 = l.AddressLine1;
             AddressLine2 = l.AddressLine2;

@@ -16,5 +16,6 @@ namespace adventureApi.Models.Entities
         public int Rating { get; set; }
         public string Comment { get; set; }
         public bool IsPrivate { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
