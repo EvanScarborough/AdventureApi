@@ -21,6 +21,7 @@ namespace adventureApi.Services
         {
             return _db.Adventures
                 .Where(a => a.AdventureId == adventureId)
+                .Include(a => a.AddedByUser)
                 .Include(a => a.AdventureMembers)
                 .ThenInclude(am => am.User)
                 .SingleOrDefault();
@@ -31,6 +32,7 @@ namespace adventureApi.Services
             return _db.Adventures
                 .Where(a => a.LocationId == locationId)
                 .Where(a => !a.IsDeleted)
+                .Include(a => a.AddedByUser)
                 .Include(a => a.AdventureMembers)
                 .ThenInclude(am => am.User)
                 .ToList();
