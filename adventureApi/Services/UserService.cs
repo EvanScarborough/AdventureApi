@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using adventureApi.Models.Entities;
@@ -17,6 +18,11 @@ namespace adventureApi.Services
         {
             _db = db;
             _encryptionService = encryptionService;
+        }
+
+        public List<User> GetAll()
+        {
+            return _db.Users.ToList();
         }
         
         public User GetById(int id)

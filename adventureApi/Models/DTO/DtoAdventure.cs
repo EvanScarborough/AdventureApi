@@ -23,7 +23,7 @@ namespace adventureApi.Models.DTO
             AdventureId = adventure.AdventureId;
             Time = adventure.Time;
             Rating = adventure.AdventureMembers
-                .Where(am => !am.IsDeleted)
+                .Where(am => !am.IsDeleted && am.IsCompleted)
                 .Select(am => (decimal)am.Rating)
                 .AverageOrDefault();
             Description = adventure.Description;

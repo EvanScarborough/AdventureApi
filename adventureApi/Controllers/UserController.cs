@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using adventureApi.Helpers;
+using adventureApi.Models.DTO;
 using adventureApi.Models.RequestModels;
 using adventureApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +19,13 @@ namespace adventureApi.Controllers
         {
             _userService = userService;
             _authService = authService;
+        }
+
+        [HttpGet]
+        [Authorize(Constants.UserRole.Contributor)]
+        public IActionResult GetAll()
+        {
+            return Ok(_userService.GetAll().Select(u => new DtoUser(u)));
         }
 
         [HttpPost]

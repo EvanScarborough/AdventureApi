@@ -54,7 +54,8 @@ namespace adventureApi.Models.DTO
             Rating = l.Adventures?
                 .Where(a => !a.IsDeleted)
                 .Select(a => a.AdventureMembers
-                    .Select(m => (decimal)m.Rating)
+                    .Where(am => !am.IsDeleted && am.IsCompleted)
+                    .Select(am => (decimal)am.Rating)
                     .AverageOrDefault())
                 .AverageOrDefault() ?? 0;
         }
@@ -68,7 +69,8 @@ namespace adventureApi.Models.DTO
                 .Where(a => !a.IsDeleted
                     && a.AdventureMembers.Any(m => m.UserId == userId))
                 .Select(a => a.AdventureMembers
-                    .Select(m => (decimal)m.Rating)
+                    .Where(am => !am.IsDeleted && am.IsCompleted)
+                    .Select(am => (decimal)am.Rating)
                     .AverageOrDefault())
                 .AverageOrDefault() ?? 0;
         }

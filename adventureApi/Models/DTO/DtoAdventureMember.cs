@@ -11,6 +11,7 @@ namespace adventureApi.Models.DTO
         public int Rating { get; set; }
         public string Comment { get; set; }
         public bool IsPrivate { get; set; }
+        public bool IsCompleted { get; set; }
 
         public DtoAdventureMember() { }
         public DtoAdventureMember(AdventureMember adventureMember)
@@ -21,6 +22,7 @@ namespace adventureApi.Models.DTO
             Rating = adventureMember.Rating;
             Comment = adventureMember.Comment;
             IsPrivate = adventureMember.IsPrivate;
+            IsCompleted = adventureMember.IsCompleted;
         }
     }
 }
