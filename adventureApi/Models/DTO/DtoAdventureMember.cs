@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using adventureApi.Models.Entities;
 
 namespace adventureApi.Models.DTO
@@ -12,6 +14,7 @@ namespace adventureApi.Models.DTO
         public string Comment { get; set; }
         public bool IsPrivate { get; set; }
         public bool IsCompleted { get; set; }
+        public List<string> ImageUrls { get; set; }
 
         public DtoAdventureMember() { }
         public DtoAdventureMember(AdventureMember adventureMember)
@@ -23,6 +26,7 @@ namespace adventureApi.Models.DTO
             Comment = adventureMember.Comment;
             IsPrivate = adventureMember.IsPrivate;
             IsCompleted = adventureMember.IsCompleted;
+            ImageUrls = adventureMember.AdventureImages.Select(i => i.ImageUrl).ToList();
         }
     }
 }

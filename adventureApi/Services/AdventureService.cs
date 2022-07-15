@@ -24,6 +24,8 @@ namespace adventureApi.Services
                 .Include(a => a.AddedByUser)
                 .Include(a => a.AdventureMembers)
                 .ThenInclude(am => am.User)
+                .Include(a => a.AdventureMembers)
+                .ThenInclude(am => am.AdventureImages)
                 .SingleOrDefault();
         }
 
@@ -35,6 +37,8 @@ namespace adventureApi.Services
                 .Include(a => a.AddedByUser)
                 .Include(a => a.AdventureMembers)
                 .ThenInclude(am => am.User)
+                .Include(a => a.AdventureMembers)
+                .ThenInclude(am => am.AdventureImages)
                 .ToList();
         }
 

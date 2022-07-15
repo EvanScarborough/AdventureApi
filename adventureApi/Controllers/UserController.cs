@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using adventureApi.Helpers;
 using adventureApi.Models.DTO;
 using adventureApi.Models.RequestModels;
@@ -45,6 +46,12 @@ namespace adventureApi.Controllers
             {
                 return BadRequest(new { message = e.Message });
             }
+        }
+
+        [HttpPost("/profilepic")]
+        public IActionResult PostUserImage()
+        {
+            return NotFound();
         }
     }
 }

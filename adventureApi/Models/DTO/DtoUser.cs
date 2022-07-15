@@ -7,12 +7,14 @@ namespace adventureApi.Models.DTO
     {
         public int UserId { get; set; }
         public string DisplayName { get; set; }
+        public string ProfilePictureUrl { get; set; }
 
         public DtoUser() { }
         public DtoUser(User user)
         {
             UserId = user.UserId;
             DisplayName = user.DisplayName;
+            ProfilePictureUrl = user.ProfilePictureUrl;
         }
     }
 }

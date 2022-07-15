@@ -10,5 +10,6 @@ namespace adventureApi.Models.Entities
         public string Email { get; set; }
         public string Password { get; set; }
         public Constants.UserRole Role { get; set; }
+        public string ProfilePictureUrl { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace adventureApi.Models.Entities
@@ -18,5 +19,6 @@ namespace adventureApi.Models.Entities
         public bool IsPrivate { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsDeleted { get; set; }
+        public List<AdventureImage> AdventureImages { get; set; }
     }
 }
