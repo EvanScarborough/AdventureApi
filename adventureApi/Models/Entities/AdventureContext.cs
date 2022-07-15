@@ -13,6 +13,7 @@ namespace adventureApi.Models.Entities
         public DbSet<Location> Locations { get; set; }
         public DbSet<Adventure> Adventures { get; set; }
         public DbSet<AdventureMember> AdventureMembers { get; set; }
+        public DbSet<AdventureImage> AdventureImages { get; set; }
 
 
         public AdventureContext(IOptions<AppSettings> appSettings)
