@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using adventureApi.Helpers;
 using adventureApi.Models.DTO;
+using adventureApi.Models.Entities;
 using adventureApi.Models.RequestModels;
 using adventureApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,13 @@ namespace adventureApi.Controllers
         public IActionResult GetAll()
         {
             return Ok(_userService.GetAll().Select(u => new DtoUser(u)));
+        }
+
+        [HttpGet("{userId}")]
+        public IActionResult GetUser(int userId)
+        {
+            var user = (User)HttpContext.Items["User"];
+            return Ok(_userService.GetDetails(userId, user));
         }
 
         [HttpPost]

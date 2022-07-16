@@ -59,6 +59,22 @@ namespace adventureApi.Models.DTO
                     .AverageOrDefault())
                 .AverageOrDefault() ?? 0;
         }
+        public DtoLocation(Location l, bool simple)
+        {
+            LocationId = l.LocationId;
+            Name = l.Name;
+            LocationType = l.LocationTypeId;
+            Description = l.Description;
+            AddressLine1 = l.AddressLine1;
+            AddressLine2 = l.AddressLine2;
+            City = l.City;
+            State = l.State;
+            Country = l.Country;
+            ZipCode = l.ZipCode;
+            Neighborhood = l.Neighborhood;
+            Latitude = l.Latitude;
+            Longitude = l.Longitude;
+        }
         public DtoLocation(Location l, int userId) : this(l)
         {
             MyAdventureCount = l.Adventures?

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using adventureApi.Models.DTO;
 using adventureApi.Models.Entities;
 using adventureApi.Models.RequestModels;
+using adventureApi.Models.ResponseModels;
 using adventureApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +30,28 @@ namespace adventureApi.Services
         public User GetById(int id)
         {
             return _db.Users.Where(u => u.UserId == id).FirstOrDefault();
+        }
+
+        public UserDetailsModel GetDetails(int id, User loggedInUser)
+        {
+            return new UserDetailsModel()
+            {
+                User = new DtoUser(GetById(id)),
+                DetailsHidden = loggedInUser == null,
+                Adventures = loggedInUser == null ? null : _db.Adventures
+                    .Where(a => !a.IsDeleted)
+                    .Where(a => !a.IsPrivate || a.AddedByUserId == loggedInUser.UserId)
+                    .Where(a => a.AdventureMembers
+                        .Any(m => m.UserId == id))
+                    .Include(a => a.AddedByUser)
+                    .Include(a => a.AdventureMembers)
+                        .ThenInclude(m => m.User)
+                    .Include(a => a.AdventureMembers)
+                        .ThenInclude(m => m.AdventureImages)
+                    .Include(a => a.Location)
+                    .Select(a => new DtoAdventure(a))
+                    .ToList()
+            };
         }
 
         public User GetByEmail(string email)

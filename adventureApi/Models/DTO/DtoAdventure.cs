@@ -16,6 +16,7 @@ namespace adventureApi.Models.DTO
         public DateTime AddedAtTime { get; set; }
         public List<DtoAdventureMember> Members { get; set; }
         public bool IsPrivate { get; set; }
+        public DtoLocation Location { get; set; }
 
         public DtoAdventure() { }
         public DtoAdventure(Adventure adventure)
@@ -33,6 +34,10 @@ namespace adventureApi.Models.DTO
                 .Where(am => !am.IsDeleted)
                 .Select(am => new DtoAdventureMember(am))
                 .ToList();
+            if (adventure.Location != null)
+            {
+                Location = new DtoLocation(adventure.Location, true);
+            }
         }
     }
 }
