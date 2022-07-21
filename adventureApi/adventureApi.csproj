@@ -18,11 +18,15 @@
     <None Remove="Middleware\" />
     <None Remove="Models\Settings\" />
     <None Remove="Helpers\" />
+    <None Remove="AWSSDK.S3" />
+    <None Remove="MediaTypeMap.Core" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.9.28" />
+    <PackageReference Include="MediaTypeMap.Core" Version="2.3.3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

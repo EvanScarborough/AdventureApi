@@ -48,6 +48,7 @@ namespace adventureApi
             services.AddScoped<IEncryptionService, EncryptionService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IAdventureService, AdventureService>();
+            services.AddScoped<IImageService, ImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

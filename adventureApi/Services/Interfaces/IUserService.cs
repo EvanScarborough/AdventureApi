@@ -13,5 +13,6 @@ namespace adventureApi.Services.Interfaces
         UserDetailsModel GetDetails(int id, User loggedInUser);
         User GetByEmail(string email);
         User Create(RegisterUserRequestModel request);
+        User Update(User user);
     }
 }

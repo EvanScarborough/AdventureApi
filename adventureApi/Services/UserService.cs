@@ -100,5 +100,11 @@ namespace adventureApi.Services
                 return false;
             }
         }
+
+        public User Update(User user)
+        {
+            _db.SaveChanges();
+            return user;
+        }
     }
 }
