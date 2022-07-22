@@ -4,6 +4,7 @@ using System.Linq;
 using adventureApi.Models.Entities;
 using adventureApi.Models.RequestModels;
 using adventureApi.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace adventureApi.Services
@@ -11,10 +12,14 @@ namespace adventureApi.Services
     public class AdventureService : IAdventureService
     {
         private AdventureContext _db;
+        private IImageService _imageService;
 
-        public AdventureService(AdventureContext db)
+        public static readonly string ImageBlobFolder = "adventure";
+
+        public AdventureService(AdventureContext db, IImageService imageService)
         {
             _db = db;
+            _imageService = imageService;
         }
 
         public Adventure Get(int adventureId)
@@ -88,6 +93,22 @@ namespace adventureApi.Services
             }
             _db.SaveChanges();
             return adventure;
+        }
+
+        public AdventureImage AddImage(int adventureId, int userId, IFormFile file)
+        {
+            var adventure = Get(adventureId);
+            var member = adventure.AdventureMembers.Where(m => m.UserId == userId).SingleOrDefault();
+            if (member == null) throw new Exception("The user was not part of this adventure");
+            var fileUrl = _imageService.UploadToBlobStorage(file, ImageBlobFolder);
+            var adventureImage = new AdventureImage()
+            {
+                AdventureMemberId = member.AdventureMemberId,
+                ImageUrl = fileUrl
+            };
+            _db.AdventureImages.Add(adventureImage);
+            _db.SaveChanges();
+            return adventureImage;
         }
     }
 }

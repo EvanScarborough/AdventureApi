@@ -5,6 +5,7 @@ using adventureApi.Models.DTO;
 using adventureApi.Models.Entities;
 using adventureApi.Models.RequestModels;
 using adventureApi.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace adventureApi.Controllers
@@ -44,6 +45,15 @@ namespace adventureApi.Controllers
             var user = (User)HttpContext.Items["User"];
             var addedAdventure = _adventureService.Add(request, user.UserId);
             return Ok(new DtoAdventure(_adventureService.Get(addedAdventure.AdventureId)));
+        }
+
+        [HttpPost("{adventureId}/image")]
+        [Authorize(Constants.UserRole.Contributor)]
+        public IActionResult PostImage(int adventureId, IFormFile file)
+        {
+            var user = (User)HttpContext.Items["User"];
+            _adventureService.AddImage(adventureId, user.UserId, file);
+            return Ok(new { status = "Success" });
         }
     }
 }

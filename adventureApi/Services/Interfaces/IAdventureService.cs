@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using adventureApi.Models.Entities;
 using adventureApi.Models.RequestModels;
+using Microsoft.AspNetCore.Http;
 
 namespace adventureApi.Services.Interfaces
 {
@@ -11,5 +12,6 @@ namespace adventureApi.Services.Interfaces
         List<Adventure> GetAllByLocationId(int locationId);
         bool UserHasAccess(Adventure adventure, int userId);
         Adventure Add(AddAdventureRequestModel request, int userId);
+        AdventureImage AddImage(int adventureId, int userId, IFormFile file);
     }
 }
