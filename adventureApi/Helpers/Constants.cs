@@ -23,5 +23,11 @@ namespace adventureApi.Helpers
             [EnumMember(Value = "PointOfInterest")]
             PointOfInterest = 4
         }
+
+        public enum NotificationType
+        {
+            [EnumMember(Value = "AddedToAdventure")]
+            AddedToAdventure = 1
+        }
     }
 }
