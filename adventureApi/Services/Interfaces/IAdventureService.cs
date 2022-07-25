@@ -12,6 +12,7 @@ namespace adventureApi.Services.Interfaces
         List<Adventure> GetAllByLocationId(int locationId);
         bool UserHasAccess(Adventure adventure, int userId);
         Adventure Add(AddAdventureRequestModel request, int userId);
+        void AddReview(int adventureId, AdventureReviewRequestModel request, int userId);
         AdventureImage AddImage(int adventureId, int userId, IFormFile file);
     }
 }

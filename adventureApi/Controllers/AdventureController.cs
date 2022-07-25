@@ -47,6 +47,15 @@ namespace adventureApi.Controllers
             return Ok(new DtoAdventure(_adventureService.Get(addedAdventure.AdventureId)));
         }
 
+        [HttpPost("{adventureId}/review")]
+        [Authorize(Constants.UserRole.Contributor)]
+        public IActionResult AddReview(int adventureId, AdventureReviewRequestModel request)
+        {
+            var user = (User)HttpContext.Items["User"];
+            _adventureService.AddReview(adventureId, request, user.UserId);
+            return Ok(new DtoAdventure(_adventureService.Get(adventureId)));
+        }
+
         [HttpPost("{adventureId}/image")]
         [Authorize(Constants.UserRole.Contributor)]
         public IActionResult PostImage(int adventureId, IFormFile file)

@@ -95,6 +95,17 @@ namespace adventureApi.Services
             return adventure;
         }
 
+        public void AddReview(int adventureId, AdventureReviewRequestModel request, int userId)
+        {
+            var adventure = Get(adventureId);
+            var member = adventure.AdventureMembers.Where(m => m.UserId == userId).SingleOrDefault();
+            if (member == null) throw new Exception("The user was not part of this adventure");
+            member.Rating = request.Rating;
+            member.Comment = request.Comment;
+            member.IsCompleted = true;
+            _db.SaveChanges();
+        }
+
         public AdventureImage AddImage(int adventureId, int userId, IFormFile file)
         {
             var adventure = Get(adventureId);
